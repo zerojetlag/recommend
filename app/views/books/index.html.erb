@@ -1,0 +1,19 @@
+<script>
+$(document).ready(function(){
+  $('form#search').submit(function(){
+    console.log($(this));
+    var id = $(this).find('input[name=userid]').val();
+    $.ajax({
+        url:"http://books.nirvawolf.com/Recommendation?userid=" + id,
+        type:'GET',
+        success: function(data){
+          //$('body').append( "Name: " + data );
+          alert('fuck');
+          $('body').html(data.toString());
+        },
+        dataType: "jsonp",
+        });
+    return false;
+    });
+  });
+</script>

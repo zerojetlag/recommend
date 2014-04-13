@@ -7,7 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<nav class="navbar navbar-inverse" role="navigation">
+  <%= form_tag('http://books.nirvawolf.com/Recommendation', remote: true, class: "navbar-form navbar-left", role: "search", id: "search") do %>
+ <!--  <form class="navbar-form navbar-left" role="search"> -->
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search" name="userid">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  <!-- </form> -->
+  <% end %>
+</nav>
 <%= yield %>
 
 </body>
