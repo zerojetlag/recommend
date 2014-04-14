@@ -1,21 +1,30 @@
-<script>
-$(document).ready(function(){
-  $('form#search').submit(function(){
-    console.log($(this));
-    var id = $(this).find('input[name=userid]').val();
-    $.ajax({
-        url:"http://books.nirvawolf.com/Recommendation?userid=" + id,
-        type:'GET',
-        success: function(data){
-          //$('body').append( "Name: " + data );
-          alert('fuck');
-          $('body').html(data.toString());
-        },
-        dataType: "jsonp",
-        });
-    return false;
-    });
-  });
-</script>
-<div class="col-md-6">sdfsdf</div>
-<div class="col-md-6">sdfsdfsdf</div>
+<div class="col-md-6">
+  <h5>借书记录</h5>
+  <table class="table table-striped" id="books">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>name</th>
+        <th>author</th>
+        <th>topic</th>
+      </tr>
+    </thead>
+    <tbody>
+  </table>
+</div>
+<div class="col-md-6">
+  <h5>推荐图书</h5>
+  <table class="table table-striped" id="recommend">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>name</th>
+        <th>author</th>
+        <th>topic</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  </table>
+</div>
