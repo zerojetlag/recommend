@@ -19,6 +19,7 @@ $(document).ready(function(){
             index += 1;
           });
           table.html(html);
+          $('tr').tooltip();
         },
         dataType: "jsonp",
     });
@@ -30,7 +31,7 @@ $(document).ready(function(){
           var table = $('#books').find('tbody');
           var html = "";
           $.each(data['books'], function(){
-            html += "<tr>";
+            html += "<tr data-toggle='tooltip' title='category code:"+data['books'][index]['categoryCode']+", acquire code: "+data['books'][index]['acquireCode']+", publisher: "+data['books'][index]['publisher']+"'>";
             html += "<td>"+index+"</td>";
             html += "<td>"+data['books'][index]['bookName']+"</td>";
             html += "<td>"+data['books'][index]['author']+"</td>";
@@ -39,6 +40,7 @@ $(document).ready(function(){
             index += 1;
           });
           table.html(html);
+          $('tr').tooltip();
         },
         dataType: "jsonp",
     });
