@@ -4,7 +4,8 @@ gem 'rails', '3.2.11'
 gem 'mysql2'
 gem 'pg'
 gem 'thin'
-
+gem 'nokogiri', '~> 1.5.11'
+gem 'rchardet19'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
