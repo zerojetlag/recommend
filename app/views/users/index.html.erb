@@ -1,0 +1,39 @@
+<div class="col-md-12">
+  <h5>可查询用户</h5>
+  <table class="table table-striped" id="users">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>college</th>
+        <th>userid</th>
+        <th>major</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<script>
+  $(document).ready(function(){
+    $.ajax({
+        url:"http://books.nirvawolf.com/UserInfo",
+        type:'GET',
+        success: function(data){
+          var index = 0;
+          var table = $('#users').find('tbody');
+          var html = "";
+          $.each(data['userinfo'], function(){
+            html += "<tr>";
+            html += "<td>"+index+"</td>";
+            html += "<td>"+data['userinfo'][index]['college']+"</td>";
+            html += "<td><a href='/?q="+data['userinfo'][index]['userid']+"'>"+data['userinfo'][index]['userid']+"</td>";
+            html += "<td>"+data['userinfo'][index]['major']+"</td>";
+            html += "</tr>";
+            index += 1;
+          });
+          table.html(html);
+        },
+        dataType: "jsonp",
+    });
+  });
+</script>

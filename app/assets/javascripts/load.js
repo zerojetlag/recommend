@@ -46,4 +46,7 @@ $(document).ready(function(){
     });
     return false;
   });
+  if($('form#search').find('.form-control').val().length > 1){
+    $('form#search').submit();
+  }
 });
