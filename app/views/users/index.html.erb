@@ -1,0 +1,22 @@
+<div class="col-md-12">
+  <h5>借书记录</h5>
+  <table class="table table-striped" id="books">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>number</th>
+        <th>name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each_with_index do |user, index| %>
+        <tr>
+          <td><%= index %></td>
+          <td><%= link_to user.student_number, recommend_path(id: user.student_number) %></td>
+          <td><%= user.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @users %>
+</div>

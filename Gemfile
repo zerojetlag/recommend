@@ -7,6 +7,7 @@ gem 'thin'
 gem 'nokogiri', '~> 1.5.11'
 gem 'rchardet19'
 gem 'pry'
+gem 'kaminari'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

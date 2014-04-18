@@ -1,0 +1,48 @@
+<div class="col-md-6">
+  <h5>借书记录</h5>
+  <table class="table table-striped" id="books">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>name</th>
+        <th>author</th>
+        <th>topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each_with_index do |book, index| %>
+        <tr>
+          <td><%= index %></td>
+          <td><%= book.name %></td>
+          <td><%= book.author %></td>
+          <td><%= book.second_category %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @books %>
+</div>
+<div class="col-md-6">
+  <h5>推荐图书</h5>
+  <table class="table table-striped" id="recommend">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>name</th>
+        <th>author</th>
+        <th>topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @recommend_books.each_with_index do |book, index| %>
+        <tr>
+          <td><%= index %></td>
+          <td><%= book.name %></td>
+          <td><%= book.author %></td>
+          <td><%= book.second_category %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @recommend_books %>
+</div>
