@@ -51,4 +51,48 @@ namespace :v1 do
     _string.encode!("utf-8", :undef => :replace, :replace => "?", :invalid => :replace)
     return _string
   end
+
+  desc "Task description"
+  task :tree => :environment do
+    attributes = ['Age', 'Education', 'Income', 'Marital Status']
+    training = [
+      ['36-55', 'Masters', 'High', 'Single', 1],
+      ['18-35', 'High School', 'Low', 'Single', 0],
+      ['< 18', 'High School', 'Low', 'Married', 1]
+      # ... more training examples
+    ]
+
+    # Instantiate the tree, and train it based on the data (set default to '1')
+    dec_tree = DecisionTree::ID3Tree.new(attributes, training, 1, :discrete)
+    dec_tree.train
+
+    test = ['< 18', 'High School', 'Low', 'Single', 0]
+
+    decision = dec_tree.predict(test)
+    puts "Predicted: #{decision} ... True decision: #{test.last}";
+
+    # Graph the tree, save to 'discrete.png'
+    dec_tree.graph("zaqqaz")
+  end
+
+  desc "Task description"
+  task :tree1 => :environment do
+    attributes = ['code1', 'code2', 'category']
+    training = Book.limit(5000).map{|b| [b.shelf.split('/')[0], b.shelf.split('/')[1], b.second_category]}
+
+    # Instantiate the tree, and train it based on the data (set default to '1')
+    dec_tree = DecisionTree::ID3Tree.new(attributes, training, 1, :discrete)
+    dec_tree.train
+
+   # book = Book.find(11000)
+    
+    Book.last(50).each do |book|
+      test = [book.shelf.split('/')[0], book.shelf.split('/')[1], book.second_category]
+      decision = dec_tree.predict(test)
+      puts "Predicted: #{decision} ... True decision: #{test.last}";
+    end
+    
+    # Graph the tree, save to 'discrete.png'
+    dec_tree.graph("discrete")
+  end
 end
