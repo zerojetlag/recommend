@@ -54,43 +54,50 @@ namespace :v1 do
 
   desc "Task description"
   task :tree => :environment do
-    attributes = ['Age', 'Education', 'Income', 'Marital Status']
+    labels = ["hunger", "color"]
     training = [
-      ['36-55', 'Masters', 'High', 'Single', 1],
-      ['18-35', 'High School', 'Low', 'Single', 0],
-      ['< 18', 'High School', 'Low', 'Married', 1]
-      # ... more training examples
+            [8, "red", "angry"],
+            [6, "red", "angry"],
+            [7, "red", "angry"],
+            [7, "blue", "not angry"],
+            [2, "red", "not angry"],
+            [3, "blue", "not angry"],
+            [2, "blue", "not angry"],
+            [1, "red", "not angry"]
     ]
 
-    # Instantiate the tree, and train it based on the data (set default to '1')
-    dec_tree = DecisionTree::ID3Tree.new(attributes, training, 1, :discrete)
+    dec_tree = DecisionTree::ID3Tree.new(labels, training, "not angry", color: :discrete, hunger: :continuous)
     dec_tree.train
-
-    test = ['< 18', 'High School', 'Low', 'Single', 0]
-
+    test = [7, "red"]
     decision = dec_tree.predict(test)
     puts "Predicted: #{decision} ... True decision: #{test.last}";
-
-    # Graph the tree, save to 'discrete.png'
-    dec_tree.graph("zaqqaz")
+    dec_tree.graph("test")
   end
 
   desc "Task description"
   task :tree1 => :environment do
-    attributes = ['code1', 'code2', 'category']
-    training = Book.limit(5000).map{|b| [b.shelf.split('/')[0], b.shelf.split('/')[1], b.second_category]}
+    #attributes = ['author', 'year', 'publisher']
+    attributes = ['author', 'year', 'publisher', 'ss']
+    training = Book.limit(1000).map{|b| [b.author, b.born_year, b.publisher, b.second_category, b.shelf[0]]}
 
     # Instantiate the tree, and train it based on the data (set default to '1')
-    dec_tree = DecisionTree::ID3Tree.new(attributes, training, 1, :discrete)
+    dec_tree = DecisionTree::ID3Tree.new(attributes, training, 'H', :discrete)
     dec_tree.train
 
    # book = Book.find(11000)
-    
-    Book.last(50).each do |book|
-      test = [book.shelf.split('/')[0], book.shelf.split('/')[1], book.second_category]
+    count = 0
+    SIZE = 10000
+    Book.last(SIZE).each do |book|
+      #test = [book.author, book.born_year, book.publisher, book.shelf[0]]
+      test = [book.author, book.born_year, book.publisher, book.second_category, book.shelf[0]]
       decision = dec_tree.predict(test)
       puts "Predicted: #{decision} ... True decision: #{test.last}";
+      if decision == test.last
+        count = count + 1
+      end
     end
+    puts "#{(count.to_f / SIZE * 100).to_i}%"
+    puts count
     
     # Graph the tree, save to 'discrete.png'
     dec_tree.graph("discrete")
