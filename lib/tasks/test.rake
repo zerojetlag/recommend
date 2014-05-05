@@ -43,6 +43,34 @@ namespace :v1 do
     end
   end
 
+  desc "Task description"
+  task :users => :environment do
+    doc = Nokogiri::HTML(toUtf8(open("http://books.nirvawolf.com/UserInfo").read))
+    users = doc.to_s.scan(/\d\d\d\d\d\d\d\d\d\d\d/)
+
+    users.each do |user|
+      begin
+        doc = Nokogiri::HTML(toUtf8(open("http://books.nirvawolf.com/UserBooks?userid=#{user}").read))
+      rescue Timeout::Error
+        next
+      end
+      records = doc.to_s.scan(/\{[^\{\}]+\}/)
+      records.each do |record|
+        next if record.index(/bookName\"\:/).blank?
+        tmp = record[record.index(/bookName\"\:/)..record.length]
+        name = tmp[11..tmp.length-3].strip
+        url = Url.new(name: name)
+        puts name + '  id: ' + user
+        if url.save
+          puts "#{name}  save!"
+        end
+      end
+    end
+    #doc = Nokogiri::HTML(toUtf8(open("http://books.nirvawolf.com/UserBooks?userid=#{users[0]}").read))
+    #binding.pry
+  end
+
+
   def toUtf8(_string)
     cd = CharDet.detect(_string)      #用于检测编码格式  在gem rchardet9里
     if cd.confidence > 0.6
