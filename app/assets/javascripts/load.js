@@ -17,7 +17,7 @@ $(document).ready(function(){
             if(index%3==0&&index!=0)
               html+='<li class="col-md-12">';
 
-            html += "<div class='book col-md-4'><img src='"+data['books'][index]['imageURL']+"' style='width:140px;height:210px' /></div>";
+            html += "<div class='book col-md-4'><a data-toggle='tooltip' data-original-title='"+ data['books'][index]['bookName'] +"' href='"+data['books'][index]['bookURL']+"'><img src='"+data['books'][index]['imageURL']+"' style='width:130px;height:180px;margin-top:10px' /></a></div>";
             
             // html += "<td>"+index+"</td>";
             // html += "<td>"+data['books'][index]['bookName']+"</td>";
@@ -28,6 +28,7 @@ $(document).ready(function(){
           });
           html+='</li>';
           table.html(html);
+          $('a').tooltip();
         },
         dataType: "jsonp",
     });
@@ -45,7 +46,7 @@ $(document).ready(function(){
             if(index%3==0&&index!=0)
               html+='<li class="col-md-12">';
             
-            html += "<div class='book col-md-4'><img src='"+data['books'][index]['imageURL']+"' style='width:140px;height:210px' /></div>";
+            html += "<div class='book col-md-4'><a data-toggle='tooltip' data-original-title='"+ data['books'][index]['bookName'] +"' href='"+data['books'][index]['bookURL']+"'><img src='"+data['books'][index]['imageURL']+"' style='width:130px;height:180px;margin-top:10px' /></a></div>";
 
             // html += "<tr data-toggle='tooltip' title='category code:"+data['books'][index]['categoryCode']+", acquire code: "+data['books'][index]['acquireCode']+", publisher: "+data['books'][index]['publisher']+"'>";
             // html += "<td>"+index+"</td>";
@@ -56,6 +57,7 @@ $(document).ready(function(){
             index += 1;
           });
           table.html(html);
+          $('a').tooltip();
         },
         dataType: "jsonp",
     });
