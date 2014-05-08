@@ -17,7 +17,7 @@ $(document).ready(function(){
             if(index%3==0&&index!=0)
               html+='<li class="col-md-12">';
 
-            html += "<div class='book col-md-4'><img src='assets/4.png' style='height:210px' /><div class='book-name'>"+data['books'][index]['bookName']+"</div></div>";
+            html += "<div class='book col-md-4'><img src='"+data['books'][index]['imageURL']+"' style='width:140px;height:210px' /></div>";
             
             // html += "<td>"+index+"</td>";
             // html += "<td>"+data['books'][index]['bookName']+"</td>";
@@ -45,7 +45,7 @@ $(document).ready(function(){
             if(index%3==0&&index!=0)
               html+='<li class="col-md-12">';
             
-            html += "<div class='book col-md-4'><img src='assets/4.png' style='height:210px' /><div class='book-name'>"+data['books'][index]['bookName']+"</div></div>";
+            html += "<div class='book col-md-4'><img src='"+data['books'][index]['imageURL']+"' style='width:140px;height:210px' /></div>";
 
             // html += "<tr data-toggle='tooltip' title='category code:"+data['books'][index]['categoryCode']+", acquire code: "+data['books'][index]['acquireCode']+", publisher: "+data['books'][index]['publisher']+"'>";
             // html += "<td>"+index+"</td>";
