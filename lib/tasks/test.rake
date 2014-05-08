@@ -39,7 +39,7 @@ namespace :v1 do
         user.save
       end
       puts 'number: ' + id.to_s + ' done...'
-      sleep 2
+      sleep 1.5
     end
   end
 
@@ -70,6 +70,46 @@ namespace :v1 do
     #binding.pry
   end
 
+  desc "Task description"
+  task :douban => :environment do
+    urls = Url.where('url is null or image is null')
+    #binding.pry
+    urls.each do |url|
+      json = JSON::parse(toUtf8(open("http://api.douban.com/v2/book/search?apikey=09573d68b5b5152d1c05b83a211f3f87&q=#{URI::encode(url.name)}").read))
+      next if json['books'].blank?
+      url.url=json['books'][0]['alt'] 
+      url.image=json['books'][0]['images']['medium']
+      url.save
+      
+      puts url.name
+      puts url.image
+      puts url.url
+
+      sleep(2)
+    end
+  end
+
+  desc "Task description"
+  task :export_url => :environment do
+    file = File.new("url.txt","w")
+    start = 1
+    file.puts "{'books':["
+    Url.all.each do |u|
+      if start == 1
+        start = 0
+      else
+        file.puts ","
+      end
+      file.puts "{"
+      file.puts "'name':'#{u.name}',"
+      file.puts "'url':'#{u.url}',"
+      file.puts "'image':'#{u.image}'"
+      file.puts "}"
+    end
+    file.puts "]}"
+
+    file.close
+  end
 
   def toUtf8(_string)
     cd = CharDet.detect(_string)      #用于检测编码格式  在gem rchardet9里
